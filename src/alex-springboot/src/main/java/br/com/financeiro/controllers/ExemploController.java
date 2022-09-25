@@ -1,10 +1,12 @@
-package br.com.financeiro;
+package br.com.financeiro.controllers;
 
 import java.util.concurrent.atomic.AtomicLong;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import br.com.financeiro.Exemplo;
 
 @RestController
 public class ExemploController {

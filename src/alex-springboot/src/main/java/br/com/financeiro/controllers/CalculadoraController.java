@@ -1,4 +1,4 @@
-package br.com.financeiro;
+package br.com.financeiro.controllers;
 
 import java.util.concurrent.atomic.AtomicLong;
 
