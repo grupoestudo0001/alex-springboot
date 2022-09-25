@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.financeiro.exceptions.OperacaoMatematicaNaoSuportadaException;
+import br.com.financeiro.util.ConverterNumero;
 
 @RestController
 public class CalculadoraController {
@@ -20,11 +21,7 @@ public class CalculadoraController {
 			@PathVariable(value = "numero2") String numero2
 		) throws Exception {
 		
-		if (!isNumerico(numero1) || !isNumerico(numero2)) {
-			throw new OperacaoMatematicaNaoSuportadaException("Por favor inserir um número.");
-		}
-		
-		return converteToDouble(numero1) + converteToDouble(numero2);
+		return ConverterNumero.converteToDouble(numero1) + ConverterNumero.converteToDouble(numero2);
 	}
 	
 	@RequestMapping(value = "/subtrair/{numero1}/{numero2}", method=RequestMethod.GET)
@@ -32,12 +29,8 @@ public class CalculadoraController {
 			@PathVariable(value = "numero1") String numero1,
 			@PathVariable(value = "numero2") String numero2
 		) throws Exception {
-		
-		if (!isNumerico(numero1) || !isNumerico(numero2)) {
-			throw new OperacaoMatematicaNaoSuportadaException("Por favor inserir um número.");
-		}
-		
-		return converteToDouble(numero1) - converteToDouble(numero2);
+				
+		return ConverterNumero.converteToDouble(numero1) - ConverterNumero.converteToDouble(numero2);
 	}
 	
 	@RequestMapping(value = "/multiplicar/{numero1}/{numero2}", method=RequestMethod.GET)
@@ -45,12 +38,8 @@ public class CalculadoraController {
 			@PathVariable(value = "numero1") String numero1,
 			@PathVariable(value = "numero2") String numero2
 		) throws Exception {
-		
-		if (!isNumerico(numero1) || !isNumerico(numero2)) {
-			throw new OperacaoMatematicaNaoSuportadaException("Por favor inserir um número.");
-		}
-		
-		return converteToDouble(numero1) * converteToDouble(numero2);
+				
+		return ConverterNumero.converteToDouble(numero1) * ConverterNumero.converteToDouble(numero2);
 	}
 	
 	@RequestMapping(value = "/dividir/{numero1}/{numero2}", method=RequestMethod.GET)
@@ -58,12 +47,8 @@ public class CalculadoraController {
 			@PathVariable(value = "numero1") String numero1,
 			@PathVariable(value = "numero2") String numero2
 		) throws Exception {
-		
-		if (!isNumerico(numero1) || !isNumerico(numero2)) {
-			throw new OperacaoMatematicaNaoSuportadaException("Por favor inserir um número.");
-		}
-		
-		return converteToDouble(numero1) / converteToDouble(numero2);
+				
+		return ConverterNumero.converteToDouble(numero1) / ConverterNumero.converteToDouble(numero2);
 	}
 	
 	@RequestMapping(value = "/media/{numero1}/{numero2}", method=RequestMethod.GET)
@@ -71,43 +56,16 @@ public class CalculadoraController {
 			@PathVariable(value = "numero1") String numero1,
 			@PathVariable(value = "numero2") String numero2
 		) throws Exception {
-		
-		if (!isNumerico(numero1) || !isNumerico(numero2)) {
-			throw new OperacaoMatematicaNaoSuportadaException("Por favor inserir um número.");
-		}
-		
-		return (converteToDouble(numero1) + converteToDouble(numero2)) / 2;
+				
+		return (ConverterNumero.converteToDouble(numero1) + ConverterNumero.converteToDouble(numero2)) / 2;
 	}
 	
 	@RequestMapping(value = "/raizQuadrada/{numero}", method=RequestMethod.GET)
 	public Double raizQuadrada(
 			@PathVariable(value = "numero") String numero
 		) throws Exception {
-		
-		if (!isNumerico(numero)) {
-			throw new OperacaoMatematicaNaoSuportadaException("Por favor inserir um número.");
-		}
-		
-		return Math.sqrt(converteToDouble(numero));
-	}
-
-	private Double converteToDouble(String strNumero) {
-		if (strNumero == null) return 0D;
-		
-		String numero = strNumero.replaceAll(",", ".");
 				
-		if (isNumerico(numero)) return Double.parseDouble(numero);
-		
-		return 0D;
-	}
-
-	private boolean isNumerico(String strNumero) {
-		
-		if (strNumero == null) return false;
-		
-		String numero = strNumero.replaceAll(",", ".");
-		
-		return numero.matches("[-+]?[0-9]*\\.?[0-9]+");
+		return Math.sqrt(ConverterNumero.converteToDouble(numero));
 	}
 
 }
