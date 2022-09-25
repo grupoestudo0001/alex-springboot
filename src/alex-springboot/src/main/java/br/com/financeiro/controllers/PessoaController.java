@@ -1,5 +1,7 @@
 package br.com.financeiro.controllers;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,11 +20,16 @@ public class PessoaController {
 	private PessoaService service;
 	
 	@RequestMapping(value = "/{id}",
-			method = RequestMethod.GET,
-			produces = MediaType.APPLICATION_JSON_VALUE)
-	public Pessoa findById(@PathVariable(value = "id") String id) throws Exception {
+					method = RequestMethod.GET,
+					produces = MediaType.APPLICATION_JSON_VALUE)
+	public Pessoa findById(@PathVariable(value = "id") String id) {
 		return service.GetById(id);
 	}
 	
+	@RequestMapping(method = RequestMethod.GET,
+					produces = MediaType.APPLICATION_JSON_VALUE)
+	public List<Pessoa> FindAll() {
+		return service.GetAll();
+	}
 	
 }

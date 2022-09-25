@@ -1,5 +1,7 @@
 package br.com.financeiro.services;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.logging.Logger;
 
@@ -24,6 +26,34 @@ public class PessoaService {
 		pessoa.setUltimoNome("Resende");
 		pessoa.setEndereco("Estrada de quatis, 111");
 		pessoa.setSexo("Masculino");
+		
+		return pessoa;
+	}
+	
+	public List<Pessoa> GetAll() {
+		
+		logger.info("Buscando todas as pessoas");
+		
+		List<Pessoa> pessoas = new ArrayList<>();
+		
+		for (int i = 0; i < 8; i++) {
+			Pessoa pessoa = mockPessoa(i);
+			pessoas.add(pessoa);
+		}
+		
+		return pessoas;
+		
+	}
+
+	private Pessoa mockPessoa(int i) {
+		
+		Pessoa pessoa = new Pessoa();
+		
+		pessoa.setId(counter.incrementAndGet());
+		pessoa.setPrimeiroNome("Primeiro nome " + i);
+		pessoa.setUltimoNome("Último nome " + i);
+		pessoa.setEndereco("Endereço " + i);
+		pessoa.setSexo("Sexo " + i);
 		
 		return pessoa;
 	}
