@@ -9,11 +9,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.financeiro.exceptions.OperacaoMatematicaNaoSuportadaException;
 import br.com.financeiro.util.ConverterNumero;
+import br.com.financeiro.util.OperacaoMatematica;
 
 @RestController
 public class CalculadoraController {
 	
 	private final AtomicLong counter = new AtomicLong();
+	private OperacaoMatematica operacoes = new OperacaoMatematica();
 	
 	@RequestMapping(value = "/somar/{numero1}/{numero2}", method=RequestMethod.GET)
 	public Double somar(
@@ -21,7 +23,7 @@ public class CalculadoraController {
 			@PathVariable(value = "numero2") String numero2
 		) throws Exception {
 		
-		return ConverterNumero.converteToDouble(numero1) + ConverterNumero.converteToDouble(numero2);
+		return operacoes.somar(ConverterNumero.converteToDouble(numero1), ConverterNumero.converteToDouble(numero2));
 	}
 	
 	@RequestMapping(value = "/subtrair/{numero1}/{numero2}", method=RequestMethod.GET)
@@ -30,7 +32,7 @@ public class CalculadoraController {
 			@PathVariable(value = "numero2") String numero2
 		) throws Exception {
 				
-		return ConverterNumero.converteToDouble(numero1) - ConverterNumero.converteToDouble(numero2);
+		return operacoes.subtrair(ConverterNumero.converteToDouble(numero1), ConverterNumero.converteToDouble(numero2));
 	}
 	
 	@RequestMapping(value = "/multiplicar/{numero1}/{numero2}", method=RequestMethod.GET)
@@ -39,7 +41,7 @@ public class CalculadoraController {
 			@PathVariable(value = "numero2") String numero2
 		) throws Exception {
 				
-		return ConverterNumero.converteToDouble(numero1) * ConverterNumero.converteToDouble(numero2);
+		return operacoes.multiplicar(ConverterNumero.converteToDouble(numero1), ConverterNumero.converteToDouble(numero2));
 	}
 	
 	@RequestMapping(value = "/dividir/{numero1}/{numero2}", method=RequestMethod.GET)
@@ -48,7 +50,7 @@ public class CalculadoraController {
 			@PathVariable(value = "numero2") String numero2
 		) throws Exception {
 				
-		return ConverterNumero.converteToDouble(numero1) / ConverterNumero.converteToDouble(numero2);
+		return operacoes.dividir(ConverterNumero.converteToDouble(numero1), ConverterNumero.converteToDouble(numero2));
 	}
 	
 	@RequestMapping(value = "/media/{numero1}/{numero2}", method=RequestMethod.GET)
@@ -57,7 +59,7 @@ public class CalculadoraController {
 			@PathVariable(value = "numero2") String numero2
 		) throws Exception {
 				
-		return (ConverterNumero.converteToDouble(numero1) + ConverterNumero.converteToDouble(numero2)) / 2;
+		return operacoes.media(ConverterNumero.converteToDouble(numero1), ConverterNumero.converteToDouble(numero2));
 	}
 	
 	@RequestMapping(value = "/raizQuadrada/{numero}", method=RequestMethod.GET)
@@ -65,7 +67,7 @@ public class CalculadoraController {
 			@PathVariable(value = "numero") String numero
 		) throws Exception {
 				
-		return Math.sqrt(ConverterNumero.converteToDouble(numero));
+		return operacoes.raizQuadrada(ConverterNumero.converteToDouble(numero));
 	}
 
 }
