@@ -65,6 +65,31 @@ public class CalculadoraController {
 		
 		return converteToDouble(numero1) / converteToDouble(numero2);
 	}
+	
+	@RequestMapping(value = "/media/{numero1}/{numero2}", method=RequestMethod.GET)
+	public Double media(
+			@PathVariable(value = "numero1") String numero1,
+			@PathVariable(value = "numero2") String numero2
+		) throws Exception {
+		
+		if (!isNumerico(numero1) || !isNumerico(numero2)) {
+			throw new OperacaoMatematicaNaoSuportadaException("Por favor inserir um número.");
+		}
+		
+		return (converteToDouble(numero1) + converteToDouble(numero2)) / 2;
+	}
+	
+	@RequestMapping(value = "/raizQuadrada/{numero}", method=RequestMethod.GET)
+	public Double raizQuadrada(
+			@PathVariable(value = "numero") String numero
+		) throws Exception {
+		
+		if (!isNumerico(numero)) {
+			throw new OperacaoMatematicaNaoSuportadaException("Por favor inserir um número.");
+		}
+		
+		return Math.sqrt(converteToDouble(numero));
+	}
 
 	private Double converteToDouble(String strNumero) {
 		if (strNumero == null) return 0D;
