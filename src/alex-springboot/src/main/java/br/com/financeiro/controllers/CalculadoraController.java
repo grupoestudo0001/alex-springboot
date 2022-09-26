@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.financeiro.exceptions.OperacaoMatematicaNaoSuportadaException;
+import br.com.financeiro.exceptions.ResourceNotFoundException;
 import br.com.financeiro.util.ConverterNumero;
 import br.com.financeiro.util.OperacaoMatematica;
 

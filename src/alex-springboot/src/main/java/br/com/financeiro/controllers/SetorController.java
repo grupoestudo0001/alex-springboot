@@ -23,7 +23,7 @@ public class SetorController {
 	@RequestMapping(value = "/{id}",
 					method = RequestMethod.GET,
 					produces = MediaType.APPLICATION_JSON_VALUE)
-	public Setor BuscarPorId(@PathVariable(value = "id") String id) {
+	public Setor BuscarPorId(@PathVariable(value = "id") Long id) {
 		return service.BuscarPorId(id);
 	}
 	
@@ -49,7 +49,7 @@ public class SetorController {
 	
 	@RequestMapping(value = "/{id}",
 					method = RequestMethod.DELETE)
-	public Boolean Deletar(@PathVariable(value = "id") String id) {
-		return service.Deletar(id);
+	public void Deletar(@PathVariable(value = "id") Long id) {
+		service.Deletar(id);
 	}
 }

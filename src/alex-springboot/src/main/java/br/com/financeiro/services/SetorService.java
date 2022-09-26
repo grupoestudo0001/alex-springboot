@@ -1,45 +1,36 @@
 package br.com.financeiro.services;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicLong;
 import java.util.logging.Logger;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.com.financeiro.exceptions.ResourceNotFoundException;
 import br.com.financeiro.model.Setor;
+import br.com.financeiro.repositories.SetorRepository;
 
 @Service
 public class SetorService {
 
-	private final AtomicLong counter = new AtomicLong();
 	private Logger logger = Logger.getLogger(SetorService.class.getName());
 	
-	public Setor BuscarPorId(String id) {
+	@Autowired
+	SetorRepository repository;
+	
+	public Setor BuscarPorId(Long id) {
 		
 		logger.info("Buscando um setor!");
-		
-		Setor setor = new Setor();
-		
-		setor.setId(counter.incrementAndGet());
-		setor.setDescricao("Bancário");
-		setor.setInativo(false);
-		
-		return setor;
+				
+		return repository.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("Setor não encontrado com o Id!"));
 	}
 	
 	public List<Setor> BuscarTodos() {
 		
 		logger.info("Buscando todos os setores!");
 		
-		List<Setor> setores = new ArrayList<>();
-		
-		for (int i = 0; i < 8; i++) {
-			Setor setor = mockSetor(i);
-			setores.add(setor);
-		}
-		
-		return setores;
+		return repository.findAll();
 		
 	}
 	
@@ -47,31 +38,30 @@ public class SetorService {
 		
 		logger.info("Incluíndo um setor!");
 		
-		return setor;
+		return repository.save(setor);
 	}
 	
 	public Setor Atualizar(Setor setor) {
 		
 		logger.info("Atualizando um setor!");
 		
-		return setor;
+		Setor entity = repository.findById(setor.getId())
+							.orElseThrow(() -> new ResourceNotFoundException("Setor não encontrado com o Id!"));
+		
+		entity.setDescricao(setor.getDescricao());
+		entity.setInativo(setor.getInativo());
+		
+		return repository.save(setor);
 	}
 	
-	public Boolean Deletar(String id) {
+	public void Deletar(Long id) {
 		
 		logger.info("Deleteando um setor!");
 		
-		return true;
+		Setor entity = repository.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("Setor não encontrado com o Id!"));
+				
+		repository.delete(entity);
 	}
 
-	private Setor mockSetor(int i) {
-		
-		Setor setor = new Setor();
-		
-		setor.setId(counter.incrementAndGet());
-		setor.setDescricao("Bancário" + i);
-		setor.setInativo(false);
-		
-		return setor;
-	}
 }

@@ -1,6 +1,6 @@
 package br.com.financeiro.util;
 
-import br.com.financeiro.exceptions.OperacaoMatematicaNaoSuportadaException;
+import br.com.financeiro.exceptions.ResourceNotFoundException;
 
 public class ConverterNumero {
 	
@@ -10,7 +10,7 @@ public class ConverterNumero {
 		String numero = strNumero.replaceAll(",", ".");
 		
 		if (!isNumerico(numero)) {
-			throw new OperacaoMatematicaNaoSuportadaException("Por favor inserir um número.");
+			throw new ResourceNotFoundException("Por favor inserir um número.");
 		}
 				
 		if (isNumerico(numero)) return Double.parseDouble(numero);
