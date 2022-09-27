@@ -12,10 +12,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.financeiro.model.Setor;
+import br.com.financeiro.data.vo.v1.SetorVO;
 import br.com.financeiro.services.SetorService;
 
 @RestController
@@ -27,24 +26,24 @@ public class SetorController {
 
 	@GetMapping(value = "/{id}",
 			produces = MediaType.APPLICATION_JSON_VALUE)
-	public Setor BuscarPorId(@PathVariable(value = "id") Long id) {
+	public SetorVO BuscarPorId(@PathVariable(value = "id") Long id) {
 		return service.BuscarPorId(id);
 	}
 
 	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-	public List<Setor> BuscarTodos() {
+	public List<SetorVO> BuscarTodos() {
 		return service.BuscarTodos();
 	}
 
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE,
 			produces = MediaType.APPLICATION_JSON_VALUE)
-	public Setor Incluir(@RequestBody Setor setor) {
+	public SetorVO Incluir(@RequestBody SetorVO setor) {
 		return service.Incluir(setor);
 	}
 
 	@PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE,
 			produces = MediaType.APPLICATION_JSON_VALUE)
-	public Setor Atualizar(@RequestBody Setor setor) {
+	public SetorVO Atualizar(@RequestBody SetorVO setor) {
 		return service.Atualizar(setor);
 	}
 

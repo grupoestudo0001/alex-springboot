@@ -6,7 +6,9 @@ import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.com.financeiro.data.vo.v1.SetorVO;
 import br.com.financeiro.exceptions.ResourceNotFoundException;
+import br.com.financeiro.mapper.DozerMapper;
 import br.com.financeiro.model.Setor;
 import br.com.financeiro.repositories.SetorRepository;
 
@@ -18,50 +20,60 @@ public class SetorService {
 	@Autowired
 	SetorRepository repository;
 	
-	public Setor BuscarPorId(Long id) {
+	public SetorVO BuscarPorId(Long id) {
 		
 		logger.info("Buscando um setor!");
-				
-		return repository.findById(id)
-				.orElseThrow(() -> new ResourceNotFoundException("Setor não encontrado com o Id!"));
+		
+		var setor = repository
+						.findById(id)
+						.orElseThrow(() -> new ResourceNotFoundException("Setor não encontrado com o Id!"));
+		
+		return DozerMapper.parseObject(setor, SetorVO.class);
+		
+		
 	}
 	
-	public List<Setor> BuscarTodos() {
+	public List<SetorVO> BuscarTodos() {
 		
 		logger.info("Buscando todos os setores!");
 		
-		return repository.findAll();
+		return DozerMapper.parseListObjects(repository.findAll(), SetorVO.class);
 		
 	}
 	
-	public Setor Incluir(Setor setor) {
+	public SetorVO Incluir(SetorVO setorVO) {
 		
 		logger.info("Incluíndo um setor!");
 		
-		return repository.save(setor);
+		var setor = DozerMapper.parseObject(setorVO, Setor.class);
+				
+		var setorSalvo = repository.save(setor);
+		
+		return DozerMapper.parseObject(setorSalvo, SetorVO.class);
+		
 	}
 	
-	public Setor Atualizar(Setor setor) {
+	public SetorVO Atualizar(SetorVO setorVO) {
 		
 		logger.info("Atualizando um setor!");
 		
-		Setor entity = repository.findById(setor.getId())
+		var setor = repository.findById(setorVO.getId())
 							.orElseThrow(() -> new ResourceNotFoundException("Setor não encontrado com o Id!"));
 		
-		entity.setDescricao(setor.getDescricao());
-		entity.setInativo(setor.getInativo());
+		setor.setDescricao(setorVO.getDescricao());
+		setor.setInativo(setorVO.getInativo());
 		
-		return repository.save(setor);
+		return DozerMapper.parseObject(repository.save(setor), SetorVO.class);
 	}
 	
 	public void Deletar(Long id) {
 		
 		logger.info("Deleteando um setor!");
 		
-		Setor entity = repository.findById(id)
+		var setor = repository.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("Setor não encontrado com o Id!"));
 				
-		repository.delete(entity);
+		repository.delete(setor);
 	}
 
 }
