@@ -4,16 +4,24 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+
+@JsonPropertyOrder({"id", "descricao", "inativo", "dataDeCriacao"})
 public class SetorVO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	private Long id;
 	
+	
 	private String descricao;
 	
+	@JsonProperty("Data_inicio")
 	private Date dataDeCriacao;
 	
+	@JsonIgnore
 	private Boolean inativo;
 
 	public SetorVO() {}
